@@ -1,100 +1,145 @@
-// creating the nav bar 
-
-import React, { useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
-import luckyLogo from '../assets/lucky_logo.jpg'
+import React, { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const navLinkClass = ({ isActive }) =>
+    `relative font-medium transition-colors duration-300 ${
+      isActive
+        ? "text-green-700"
+        : "text-gray-600 hover:text-green-700"
+    }`;
 
   return (
-<>
-<div className="flex items-center justify-between bg-white text-gray-800 px-4 sm:px-6 lg:px-8 py-4 shadow-md border-b border-gray-200">
-  {/* Logo and Company Name */}
-  <h1 className="m-0 flex items-center gap-2 sm:gap-3">
-    <img src={luckyLogo} alt="Lucky Logo" className="h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 rounded-full" />
-    <span className="text-lg sm:text-xl lg:text-xl font-bold text-gray-800 hidden sm:block">Luckyaura</span>
-  </h1>
+    <>
+      {/* ================= NAVBAR ================= */}
+      <nav className="sticky top-0 z-50 bg-white border-b border-green-200 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center">
 
-  {/* Desktop Navigation */}
-  <ul className="hidden md:flex list-none m-0 p-0 gap-4 lg:gap-6 mx-auto items-center">
-    <li><NavLink to="/" className="text-gray-600 no-underline py-2 px-0 font-medium relative transition-colors duration-300 hover:text-blue-500 after:content-[''] after:absolute after:w-0 after:h-0.5 after:bottom-0 after:left-1/2 after:bg-blue-500 after:transition-all after:duration-300 hover:after:w-full hover:after:left-0">Home</NavLink></li>
-    <li><NavLink to="/products" className="text-gray-600 no-underline py-2 px-0 font-medium relative transition-colors duration-300 hover:text-blue-500 after:content-[''] after:absolute after:w-0 after:h-0.5 after:bottom-0 after:left-1/2 after:bg-blue-500 after:transition-all after:duration-300 hover:after:w-full hover:after:left-0">Products</NavLink></li>
-    <li><NavLink to="/about" className="text-gray-600 no-underline py-2 px-0 font-medium relative transition-colors duration-300 hover:text-blue-500 after:content-[''] after:absolute after:w-0 after:h-0.5 after:bottom-0 after:left-1/2 after:bg-blue-500 after:transition-all after:duration-300 hover:after:w-full hover:after:left-0">About</NavLink></li>
-    <li><NavLink to="/Contact" className="text-gray-600 no-underline py-2 px-0 font-medium relative transition-colors duration-300 hover:text-blue-500 after:content-[''] after:absolute after:w-0 after:h-0.5 after:bottom-0 after:left-1/2 after:bg-blue-500 after:transition-all after:duration-300 hover:after:w-full hover:after:left-0">Contact</NavLink></li>
-    <li className="ml-2 lg:ml-4">
-      <div className="relative">
-        <input
-          type="text"
-          placeholder="Search..."
-          className="pl-7 pr-3 py-1.5 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-32 lg:w-36 text-sm"
-        />
-        <svg
-          className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 lg:h-4 lg:w-4 text-gray-400"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-        </svg>
-      </div>
-    </li>
-  </ul>
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-3">
+            <img
+              src="/assets/lucky_logo.jpg"
+              alt="Lucky Aura Logo"
+              className="h-9 w-9 sm:h-11 sm:w-11 rounded-full ring-2 ring-green-600/30"
+            />
+            <span className="hidden sm:block text-xl font-bold text-gray-800">
+              Lucky Aura
+            </span>
+          </Link>
 
-  {/* Desktop Login Button */}
-  <div className="hidden md:block ml-auto">
-    <Link to="/login" className="text-white bg-blue-500 no-underline px-4 lg:px-6 py-2 rounded-full font-medium transition-colors duration-300 hover:bg-blue-700">Login</Link>
-  </div>
+          {/* Desktop Links */}
+          <ul className="hidden md:flex items-center gap-6 mx-auto">
+            <li>
+              <NavLink to="/" className={navLinkClass}>
+                Home
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/products" className={navLinkClass}>
+                Products
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/about" className={navLinkClass}>
+                About
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/contact" className={navLinkClass}>
+                Contact
+              </NavLink>
+            </li>
+          </ul>
 
-  {/* Mobile Menu Button */}
-  <button
-    className="md:hidden ml-auto p-2 rounded-md hover:bg-gray-100"
-    onClick={() => setIsMenuOpen(!isMenuOpen)}
-  >
-    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      {isMenuOpen ? (
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-      ) : (
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-      )}
-    </svg>
-  </button>
-</div>
+          {/* Desktop Actions */}
+          <div className="hidden md:flex items-center gap-4 ml-auto">
+            <input
+              type="text"
+              placeholder="Search…"
+              className="w-36 px-4 py-1.5 text-sm border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-600"
+            />
+            <Link
+              to="/login"
+              className="bg-green-700 hover:bg-green-800 text-white px-5 py-2 rounded-full font-semibold transition"
+            >
+              Login
+            </Link>
+          </div>
 
-{/* Mobile Menu */}
-{isMenuOpen && (
-  <div className="md:hidden bg-white border-t border-gray-200 px-4 py-4">
-    <ul className="space-y-4">
-      <li><Link to="/" className="block text-gray-600 no-underline py-2 font-medium hover:text-blue-500" onClick={() => setIsMenuOpen(false)}>Home</Link></li>
-      <li><Link to="/products" className="block text-gray-600 no-underline py-2 font-medium hover:text-blue-500" onClick={() => setIsMenuOpen(false)}>Products</Link></li>
-      <li><Link to="/about" className="block text-gray-600 no-underline py-2 font-medium hover:text-blue-500" onClick={() => setIsMenuOpen(false)}>About</Link></li>
-      <li><Link to="/Contact" className="block text-gray-600 no-underline py-2 font-medium hover:text-blue-500" onClick={() => setIsMenuOpen(false)}>Contact</Link></li>
-      <li className="pt-2">
-        <div className="relative mb-4">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-          <svg
-            className="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden ml-auto p-2 rounded-md hover:bg-green-50"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
+            <svg
+              className="h-6 w-6 text-gray-700"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              {isMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
         </div>
-      </li>
-      <li>
-        <Link to="/login" className="block text-center text-white bg-blue-500 no-underline px-6 py-2 rounded-full font-medium hover:bg-blue-700" onClick={() => setIsMenuOpen(false)}>Login</Link>
-      </li>
-    </ul>
-  </div>
-)}
+      </nav>
 
-</>
-  )
-}
+      {/* ================= MOBILE MENU ================= */}
+      {isMenuOpen && (
+        <div className="md:hidden bg-white border-t border-green-200 shadow-md">
+          <div className="px-6 py-6 space-y-5">
+            <Link
+              to="/"
+              onClick={() => setIsMenuOpen(false)}
+              className="block font-medium text-gray-700 hover:text-green-700"
+            >
+              Home
+            </Link>
+            <Link
+              to="/products"
+              onClick={() => setIsMenuOpen(false)}
+              className="block font-medium text-gray-700 hover:text-green-700"
+            >
+              Products
+            </Link>
+            <Link
+              to="/about"
+              onClick={() => setIsMenuOpen(false)}
+              className="block font-medium text-gray-700 hover:text-green-700"
+            >
+              About
+            </Link>
+            <Link
+              to="/contact"
+              onClick={() => setIsMenuOpen(false)}
+              className="block font-medium text-gray-700 hover:text-green-700"
+            >
+              Contact
+            </Link>
 
-export default Navbar
+            <input
+              type="text"
+              placeholder="Search…"
+              className="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-600"
+            />
+
+            <Link
+              to="/login"
+              onClick={() => setIsMenuOpen(false)}
+              className="block text-center bg-green-700 hover:bg-green-800 text-white py-2 rounded-full font-semibold transition"
+            >
+              Login
+            </Link>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+export default Navbar;

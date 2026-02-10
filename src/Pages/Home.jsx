@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -20,9 +21,12 @@ const Home = () => {
             <button className="bg-white text-green-700 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition">
               Shop Now
             </button>
-            <button className="border-2 border-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-green-700 transition">
-              Explore Products
-            </button>
+
+            <Link to="/products">
+              <button className="border-2 border-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-green-700 transition">
+                Explore Products
+              </button>
+            </Link>
           </div>
         </div>
       </section>
@@ -151,9 +155,10 @@ const Home = () => {
             Explore our organic range of face washes, serums, creams, hair oils,
             shampoos, and more — crafted with love and nature.
           </p>
+          <Link to="/products">
           <button className="bg-green-500 hover:bg-green-600 px-8 py-3 rounded-full font-semibold text-lg transition">
             View All Products
-          </button>
+          </button></Link>
         </div>
       </section>
 
