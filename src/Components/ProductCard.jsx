@@ -1,63 +1,62 @@
-import React from "react";
+import React from 'react';
+import { useCart } from '../context/CartContext';
+import { useToast } from '../context/ToastContext';
 
-const ProductCard = ({ products, onAddToCart }) => {
+const ProductCard = ({ products }) => {
+  const { addToCart } = useCart();
+  const { showToast } = useToast();
+
+  const handleAddToCart = (product) => {
+    addToCart(product);
+    showToast(`${product.name} added to cart!`, 'success');
+  };
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-      {products?.map((product) => (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {products.map((product) => (
         <div
           key={product.id}
-          className="group bg-white rounded-3xl border border-green-200/60 shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden"
+          className="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden relative"
         >
-          {/* Image */}
-          <div className="relative h-60 bg-gradient-to-b from-green-50 to-emerald-50 flex items-center justify-center">
+          {/* Badge */}
+          {product.badge && (
+            <div className="absolute top-3 right-3 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10">
+              {product.badge}
+            </div>
+          )}
+
+          {/* Product Image */}
+          <div className="relative h-64 bg-gray-100">
             <img
               src={product.image}
               alt={product.name}
-              loading="lazy"
-              decoding="async"
-              className="h-full object-contain p-6 transition-transform duration-500 group-hover:scale-105"
+              className="w-full h-full object-cover"
             />
-
-            {/* Badge */}
-            <span className="absolute top-4 right-4 bg-green-700 text-white text-[11px] font-semibold px-3 py-1.5 rounded-full shadow-md">
-              {product.badge}
-            </span>
           </div>
 
-          {/* Content */}
-          <div className="p-6">
-            {/* Category */}
-            <p className="text-xs uppercase tracking-widest text-green-700 font-semibold mb-2">
-              {product.category}
-            </p>
-
-            {/* Name */}
-            <h3 className="text-lg font-bold text-gray-800 leading-snug mb-2">
+          {/* Product Details */}
+          <div className="p-5">
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">
               {product.name}
             </h3>
+            <p className="text-sm text-gray-600 mb-3">{product.description}</p>
 
-            {/* Description */}
-            <p className="text-sm text-gray-600 mb-5 line-clamp-2">
-              {product.description}
-            </p>
-
-            {/* Rating + Price */}
-            <div className="flex items-center justify-between mb-5">
-              <span className="flex items-center gap-1 text-green-700 font-semibold text-sm">
-                ⭐ {product.rating}
-              </span>
-              <span className="text-xl font-bold text-green-900">
-                ₹{product.price}
-              </span>
+            {/* Rating */}
+            <div className="flex items-center mb-3">
+              <span className="text-yellow-500 text-sm">★ {product.rating}</span>
+              <span className="text-gray-500 text-xs ml-2">({Math.floor(Math.random() * 100) + 50} reviews)</span>
             </div>
 
-            {/* CTA */}
-            <button
-              onClick={() => onAddToCart(product)}
-              className="w-full bg-gradient-to-r from-green-700 to-emerald-700 hover:from-green-800 hover:to-emerald-800 text-white py-3 rounded-2xl font-semibold tracking-wide transition"
-            >
-              Add to Cart
-            </button>
+            {/* Price and Add to Cart */}
+            <div className="flex items-center justify-between">
+              <span className="text-2xl font-bold text-green-700">₹{product.price}</span>
+              <button
+                onClick={() => handleAddToCart(product)}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-full transition-colors duration-300"
+              >
+                Add to Cart
+              </button>
+            </div>
           </div>
         </div>
       ))}

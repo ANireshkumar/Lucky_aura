@@ -1,32 +1,33 @@
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { CartProvider } from './context/CartContext';
+import { ToastProvider } from './context/ToastContext';
+import Navbar from './Components/Navbar';
+import Home from './Pages/Home';
+import Products from './Pages/Products';
+import About from './Pages/About';
+import Contact from './Pages/Contact';
+import Cart from './Pages/Cart';
+import Login from './Pages/Login';
 
-import {Routes, Route, createBrowserRouter, createRoutesFromElements, RouterProvider} from 'react-router-dom'
-import Home from "./Pages/Home"
-import Contact from "./Pages/Contact"
-import Products from "./Pages/Products"
-import Login from "./Pages/Login"
-import About from "./Pages/About"
-import RootLayout from "./Layout/RootLayout"
-import Register from "./Pages/Register"
-
-
-const App = () => {
-
-const router = createBrowserRouter(createRoutesFromElements((
-  <Route path="/" element={<RootLayout />}>
-    <Route index element={<Home />} />
-    <Route path="Contact" element={<Contact />} />
-    <Route path="products" element={<Products />} />
-    <Route path="about" element={<About />} />  
-    <Route path="/login" element={<Login />} />
-    <Route path="/register" element={<Register />} />
-      
-  </Route>
-  )));
-
-
+function App() {
   return (
-    <RouterProvider router={router} />
-  )
+    <CartProvider>
+      <ToastProvider>
+        <BrowserRouter>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        </BrowserRouter>
+      </ToastProvider>
+    </CartProvider>
+  );
 }
 
-export default App
+export default App;
